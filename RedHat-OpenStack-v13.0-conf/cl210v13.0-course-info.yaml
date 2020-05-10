@@ -201,6 +201,8 @@ RedHat Ceph Storage architecture:
           - $ ceph auth get client.<name>
             # 查看指定 Ceph 客户端的 keyring 与 caps 权限信息
           - $ ceph auth print-key client.<name>
+          - $ systemctl list-units -t service ceph\*
+            # 列举 ocntroller0 节点的 Ceph 组件
     
 OVN network architecture:
   ### root@controller0:
