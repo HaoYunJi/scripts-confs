@@ -277,12 +277,18 @@ OVN network architecture:
           - instance can access external network and external can also access instance
 
 host aggregate:
-  - method:
-      - logical aggregate: including different hosts with some same functions
-      - flavor: with specified proporties point to logical aggregate
-      - instance: use flavor to build and scheduled to hosts of logical aggregate
+  - logical aggregate: including different hosts with some same functions
+  - flavor: with specified properties point to logical aggregate
+  - instance: use flavor to build and scheduled to hosts of logical aggregate
 
-Lab:
+heat engine:
+  - heat template: include all resources and default variables
+  - environment file: customized variables to overwrite default variables in heat template
+  - use 'heat template' and 'environment file' to create heat stack
+  - heat stack is all resources defined in heat template
+  - resources include instance, network, flavor, image, security-group, floating-ip, etc.
+
+lab-demo:
   - description: how to deploy a instance for openstack cluster external access?
   - needed resources:
       - flavor
