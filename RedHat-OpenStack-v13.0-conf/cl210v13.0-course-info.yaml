@@ -203,7 +203,13 @@ RedHat Ceph Storage architecture:
           - $ ceph auth print-key client.<name>
           - $ systemctl list-units -t service ceph\*
             # 列举 ocntroller0 节点的 Ceph 组件
-    
+      - ceph storage pools:
+          - vms(ephemeral): instance root disk, flavor ephemeral disk, flavor swap disk
+          - images: glance images
+          - volumes(persistent): persistent volume, instance root volume(from instance root disk)
+          - manila_metadata: ceph mds metadata
+          - manila_data: ceph filesystem shared object data
+
 OVN network architecture:
   ### root@controller0:
   - $ openstack hypervisor list -c "Hypervisor Hostname" -c "Host IP"
