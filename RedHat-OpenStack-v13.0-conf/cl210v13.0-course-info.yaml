@@ -267,7 +267,13 @@ OVN network architecture:
             # 这里的 DHCP 选址区段来自于连接的物理网络的地址区段
           - instance can access external network and external can also access instance
 
-demo1:
+host aggregate:
+  - method:
+      - logical aggregate: including different hosts with some same functions
+      - flavor: with specified proporties point to logical aggregate
+      - instance: use flavor to build and scheduled to hosts of logical aggregate
+
+Lab:
   - description: how to deploy a instance for openstack cluster external access?
   - needed resources:
       - flavor
