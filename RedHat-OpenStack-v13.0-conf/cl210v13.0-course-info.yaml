@@ -1,0 +1,193 @@
+# cl210v13.0-course-info.yaml
+undercloud:
+  - director node
+  - all-in-one openstack cluster
+overcloud:
+  - controller, compute, computehci nodes
+
+class environment:
+  kiosk@foundation0:
+    - $ rht-vmctl start all
+      # wait all nodes until running
+      # controller0, compute{0,1}, computehci0, ceph0 can be powered by power node automatically.
+      # Note: Don't power on by manual generally.
+    - $ rht-vmctl status all
+      # wait 8~10 mins to verify all nodes status
+    - $ ssh stack@director
+      # ssh login director node by stack user account
+
+  stack@director:
+    - $HOME/stackrc: connect openstack cluster environment file
+    - commands:
+      ### Please run following commands after all nodes running!
+      - $ openstack baremetal node list
+        # verify all overcloud nodes status
+      - $ openstack compute service list
+    - $HOME/undercloud.conf:
+        - inspection_iprange: 172.25.249.150,172.25.249.180
+          # FIRST POWER ON:
+          #   director node allocate ip address from inspection_iprange to new node
+          #   to complete hardware inspection
+          bm-deploy-kernel image: boot first power on
+          bm-deploy-ramdisk image: boot first power on
+        - dhcp_start: 172.25.249.51
+          dhcp_end: 172.25.249.59
+          # SECOND POWER ON:
+          #   director node allocate ip address from dhcp_start to dhcp_end to
+          #   new mode to complete OS install and rhosp software deployment
+          overcloud-full-vmlinuz image: boot second power on
+          overcloud-full-initrd image: boot second power on
+          overcloud-full image: rhosp software and environment
+    - $ ipmitool -I lanplus -U admin -P password -H 172.25.249.101 power status
+      # verify node power status
+
+  root@power:
+    # power node apply power to start overcloud.
+    - $ ps aux | grep python
+    - $ ls -lh /usr/local/bin/virshbmc.py
+
+  root@utility:
+    # utility node apply idm domain and NICs for ovn provider network.
+    - $ kinit admin
+      Password for admin@LAB.EXAMPLE.NET: RedHat123^
+      # get credential for Kerberos admin
+    - $ ipa user-show <ipa_username>
+      # get ipa user account info, e.g developer0, architect1
+
+container service:
+  - rhosp 12: community P
+  - rhosp 13: community Q
+  - rhosp 16: community T
+  - NOTE: From rhosp 12 docker container has been as a method to run openstack service.
+  - director node: systemd manage openstack service
+    overcloud nodes: docker manage openstack service
+
+  root@controller0:
+    - $ docker ps --format="table {{.Names}}\t{{.Status}}"
+      # verify container openstack service
+    - $ docker images --format="table {{.Repository}}\t{{.Tag}}"
+      # verify docker images in local docker cache(/var/lib/docker)
+
+  # All rhosp container images come from RedHat Offical Image Registry.
+  # User can download all images to local tar ball and push them to internal
+  # image registry(docker-distribution).
+    
+    - current openstack service log location: /var/log/containers/<servicename>/
+    - current openstack service config location: /var/lib/config-data/puppet-generated/<servicename>/
+
+    - controller0 node: ceph monitor
+      computehci0 node: compute and ceph storage node
+      ceph0 node: ceph storage node
+
+  stack@director:
+    - $ sudo systemctl status docker-distribution.service
+      # verify registry service
+    - $ cat /etc/docker-distribution/registry/config.yml
+      # image cache: /var/lib/registry  
+
+keystone:
+  - function:
+    - authentication
+    - authorization
+    - RBAC: role-based access control
+  - keywords:
+    - identity:
+        - user: user not belongs to any project
+        - keystone v3 feature:
+          - group
+          - multi-domain:
+              - openstack internal domain: default(keystone v2/v3)
+              - openstack external domain: AD, openldap, ipa, redhat-idm, and so on
+    - project:
+        - also called tenant
+        - all resources collection in one domain including flavor, image, security-group, network, subnet, port and so on
+    - resource
+    - token:
+        - fernet token:
+          - primary key: highest index
+          - secondary key: 0~highest index(perhaps one or more)
+          - stagged key: 0 index
+    - policy: 
+      - policies consist of role
+      - role: admin, project_admin, _member_(rhosp16 use 'member')
+    - role assignment
+
+user and group:
+  ## stack@director
+  - $ openstack workflow list | grep fernet
+  - $ openstack workflow execution create tripleo.fernet_keys.v1.rotate_fernet_keys '{"container": "overcloud"}'
+    # rotate overcloud fernet token key
+
+  ## run following commands on overcloud
+  - $ openstack domain list
+  - $ openstack domain create demotest
+  - $ openstack user list --domain demotest
+  - $ openstack user create --domain demotest --password-prompt appuser0
+    # create user in domain
+  - $ openstack role add --user <user-id> --domain <domain-id> admin
+  - $ openstack role assignment list --user <user-id> --domain <domain-id> --names
+  - $ openstack project create --doamin demotest webfront
+  - $ openstack user create --domain demotest --project webfront --project-domain demotest --password-prompt appuser1
+    # create user in domain attached specfied project
+  - $ openstack role add --user appuser1 --user-domain demotest --project webfront admin
+  - $ openstack role add --user appuser1 --user-domain demotest --project webfront _member_
+  - $ openstack user delete --domain demotest appuser2
+  - $ openstack group create appgrp --domain demotest
+
+virtual machine image:
+  - $ openstack image save --file rhel7.qcow2 6b0128a9-4481-4ceb-b34e-ffe92e0dcfdd
+    # save image from openstack glance backend to local file
+  - diskimage-builder:
+      - base image:
+          - qcow2(default) image format
+          - ${DIB_LOCAL_IMAGE} environment variable define base image location
+      - elements: 
+          - collection of shell scripts for different usage
+          - customized script in elements
+      - environment variable
+          - ${DIB_YUM_REPO_CONF}
+          - ${ELEMENTS_PATH}
+          - ${DIB_LOCAL_IMAGE}
+          
+openstack integrated with RedHat IdM:
+
+RedHat Ceph Storage architecture:
+  - logical architecture:
+    - ceph: rados
+    - librados:
+        - librbd: block(host, vm)
+        - libradosgw: object(app)
+        - directly call rados: app(c, c++, java, python, ruby, php, golang?)
+    - posix-compliant filesystem: cephfs
+
+OVN network architecture:
+  - openstack hypervisor list -c "Hypervisor Hostname" -c "Host IP"
+  - openstack network list -c ID -c Name
+  - openstack subnet list
+  - openstack port list
+  - openstack router list
+  - [root@controller0 ~]# ovs-vsctl list Open_vSwitch
+  - [root@controller0 ~]# export OVN_NB_DB=tcp:172.24.1.50:6641
+  - [root@controller0 ~]# ovn-nbctl ls-list
+    153db687-27fe-4f90-a3f0-2958c373dcc2 (neutron-7a6556ab-6083-403e-acfc-79caf3873660)
+    aca840be-670a-4eb3-9b36-4246c0eabb6c (neutron-9838d8ed-3e64-4196-87f0-a4bc59059be9)
+    b2cc3860-13f9-4eeb-b328-10dbc1f1b131 (neutron-d55f6d1e-c29e-4825-8de4-01dd95f8a220)
+    c5b32043-cd23-41ac-9197-ea41917870bb (neutron-e14d713e-c1f5-4800-8543-713563d7e82e)
+    f0f71887-2544-4f29-b46c-04b0aa0b2e52 (neutron-fc5472ee-98d9-4f6b-9bc9-544ca18aefb3)
+
+
+demo1:
+  - description: how to deploy a instance for openstack cluster external access?
+  - needed resources:
+      - flavor
+      - image
+      - tenant internal network
+      - tenant internal subnet
+      - router
+      - external network
+      - fip(floating ip)
+      - security-group
+      - security-group-rule
+      - keypair
+  - commands of progress:
+      
