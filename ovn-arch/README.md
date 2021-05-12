@@ -1,9 +1,13 @@
 # Introduce ovn-arch
 
-ovn-arch includes basic native `linux bridge` deploy and configuration, native `linux vxlan tunnel` deploy 
+ovn-arch includes basic native `linux bridge` deploy and configuration, native `linux vxlan tunnel` deploy and configuration, 
 
-and configuration, Open vSwitch and Open Virtual Network (OVN) architecture deploy and test.
+Open vSwitch (`OVS`) and Open Virtual Network (`OVN`) architecture deploy and test.
 
-Many associated commands include **`ip link`**, **`ovs-vsctl`**, **`ovn-nbctl`**, **`ovn-sbctl`** which have been displayed 
+Many associated commands include **`ip link`**, **`ovs-vsctl`**, **`ovn-nbctl`**, **`ovn-sbctl`** to manage linux network namespace,
 
-to how to use in previous scenarios.
+OVS, OVN and so on.
+
+Include several docs about OVN logical switch, router, gateway, ACL and container connection:
+
+  · https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/config-ovn-logical-switch-demo.md
