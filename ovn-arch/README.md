@@ -10,4 +10,4 @@ OVS, OVN and so on.
 
 Include several docs about OVN logical switch, router, gateway, ACL and container connection:
 
-  · https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/config-ovn-logical-switch-demo.md
+> https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/config-ovn-logical-switch-demo.md
