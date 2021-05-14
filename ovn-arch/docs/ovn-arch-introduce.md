@@ -97,14 +97,14 @@
 
 3. OVN 与 OVS 对比：
 
-   ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\ovs-ovn-compare.png)
+   ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovs-ovn-compare.png)
 
 
 #### OVN 架构概述：
 
 1. OVN 架构示意：
 
-   ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\ovn-arch.jpg)
+   ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovn-arch.jpg)
 
    
 
@@ -164,15 +164,15 @@
 
       b. 常见的逻辑端口类型：
 
-   > 1. **`*`**：VIF的逻辑端口
+   > a. **`*`**：VIF的逻辑端口
    >
-   > 2. **`localnet`**：
+   > b. **`localnet`**：
    >
    >    1）逻辑交换机映射物理网络的端口类型（ovn-bridge-mapping）。
    >
    >    2）在 OVS br-int 集成网桥与底层物理网络接口附加到的独立 OVS 网桥（OVS br-ex）之间的 OVS patch 端口（patch peer）即是 localnet 端口。
    >
-   > 3. **`patch`**：
+   > c. **`patch`**：
    >
    >    1）对等逻辑端口。
    >
@@ -180,7 +180,7 @@
    >
    >    3）在某些情况下，则是对等逻辑路由器之间的连接点。
    >
-   > 4. **`localport`**：
+   > d. **`localport`**：
    >
    >    1）OVN 角度：逻辑交换机与 VIF 之间的本地连接点。
    >
@@ -192,7 +192,7 @@
    >
    >    5）如，OpenStack Neutron 使用 ovnmeta 命名空间的 localport 端口将元数据提供给每个 HV 上的实例。
    >
-   > 5. **`router`**：逻辑交换机与逻辑路由器连接的端口。
+   > e. **`router`**：逻辑交换机与逻辑路由器连接的端口。
 
 #### OVN Northbound DB（OVN 北向数据库）：
 
@@ -206,13 +206,13 @@
 
       a. 逻辑交换机有两种类型：
 
-   > 1. 一种是 **`overlay logical switch`**，对应于 neutron network，每创建一个 neutron network，OVN 会在表中增加一行。
+   > a. 一种是 **`overlay logical switch`**，对应于 neutron network，每创建一个 neutron network，OVN 会在表中增加一行。
    >
-   >    ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\overlay-logical-switch.png)
+   >    ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/overlay-logical-switch.png)
    >
-   > 2. 另一种是 **`bridged logical switch`**，用于连接逻辑网络和物理网络，被 VTEP gateway 使用。
+   > b. 另一种是 **`bridged logical switch`**，用于连接逻辑网络和物理网络，被 VTEP gateway 使用。
    >
-   >    ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\briged-logical-switch.png)
+   >    ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/briged-logical-switch.png)
 
       b. Logical_Switch 保存 logical port（指向表 `Logical_Port`）和应用其上的 ACL（指向表 `ACL`）。   
 
@@ -220,13 +220,13 @@
 
       逻辑交换机的端口类型：localport、router、localnet、端口的 IP 和 MAC 地址、端口 UP 或 Down 的状态。
 
-   ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\logical-switch-port-type.png)
+   ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/logical-switch-port-type.png)
 
    3）**`ACL`**：
 
       每条ACL规则包含匹配的内容、方向、以及动作。
 
-   ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\logical-switch-port-acl.png)
+   ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/logical-switch-port-acl.png)
 
    > **注意**：每行代表一个应用到逻辑交换机上的 ACL 规则，若逻辑交换机上面的所有端口都没有配置安全组，那么该逻辑交换机上不应用 ACL。
 
@@ -284,7 +284,7 @@
 
       b. 端口所处的 chassis 由 ovn-controller 或 ovn-controller-vtep 设置，其余的值由 ovn-northd 设置。   
 
-   ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\ovn-southbound-port-binding.png)
+   ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovn-southbound-port-binding.png)
 
    > **注意**：逻辑端口与 chassis 的绑定关系可通过 `ovn-sbctl show` 命令输出中的 `Port_Binding` 确认，而 OVS 端口与逻辑端口的映射关系可通过 OVS Interface 数据库中 OVS 端口的 **`external_ids:iface-id`** 确认。
 
@@ -320,7 +320,7 @@
 
 4. 若 HV 有多个接口可以建立隧道，可以在 ovn-controller 启动之前，把每对值填在 Open_vSwitch 表中。
 
-   ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\ovs-openvswitch-table.png)
+   ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovs-openvswitch-table.png)
 
 #### OVN tunnel（OVN 隧道）：
 
@@ -346,7 +346,7 @@
 
       c. 该标识符长 24-bit，由 ovn-northd 分配，全局唯一，保存在 Southbound DB 的 **`Datapath_Binding`** 表的  **`tunnel_key`** 中。 
 
-   ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\logical-datapath-identifier.png)
+   ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/logical-datapath-identifier.png)
 
    2）**`logical input port identifier`**（逻辑入端口标识符）：
 
@@ -368,10 +368,10 @@
 
    > **重要**：
    >
-   > 1. 对于每个进入 OVS br-int 集成网桥的数据包都具有以上三个属性。
-   > 2. OVS 的隧道封装由 OpenFlow 流表实现，因此 ovn-controller 需将这三个标识符写到本地 HV 的 OpenFlow 流表中。
-   > 3. logical datapath identifier 与 logical input port identifier 在入口方向被赋值，分别存在 **`OpenFlow metadata`** 字段和 Nicira 扩展寄存器 **`reg14`**（Nicira extensive register 14）中。
-   > 4. 数据包经过 OVS 的 pipeline 处理后，若需要从指定端口发出，只需要将 logical output port identifier 写在 Nicira 扩展寄存器 **`reg15`**（Nicira extensive register 15）中。
+   > a. 对于每个进入 OVS br-int 集成网桥的数据包都具有以上三个属性。
+   > b. OVS 的隧道封装由 OpenFlow 流表实现，因此 ovn-controller 需将这三个标识符写到本地 HV 的 OpenFlow 流表中。
+   > c. logical datapath identifier 与 logical input port identifier 在入口方向被赋值，分别存在 **`OpenFlow metadata`** 字段和 Nicira 扩展寄存器 **`reg14`**（Nicira extensive register 14）中。
+   > d. 数据包经过 OVS 的 pipeline 处理后，若需要从指定端口发出，只需要将 logical output port identifier 写在 Nicira 扩展寄存器 **`reg15`**（Nicira extensive register 15）中。
 
 8. Geneve 隧道字段说明：
 
@@ -385,9 +385,9 @@
 
    5）value：1-bit 0、15-bit logical input port identifier、16-bit logical output port identifier
 
-   > 1. OVN 中的 tunnel 类型由 HV 上的 ovn-controller 来设置，并不由 CMS 指定。
-   > 2. OVN 中的 tunnel ID 由 OVN 分配。
-   > 3. 使用 Neutron 创建网络时指定 tunnel 类型和 tunnel ID（VNID）是无用的，OVN不做处理！
+   > a. OVN 中的 tunnel 类型由 HV 上的 ovn-controller 来设置，并不由 CMS 指定。
+   > b. OVN 中的 tunnel ID 由 OVN 分配。
+   > c. 使用 Neutron 创建网络时指定 tunnel 类型和 tunnel ID（VNID）是无用的，OVN不做处理！
 
 #### Neutron 与 OVN 对比：   
 
@@ -446,7 +446,7 @@
 
 1. OVS OpenFlow 流表在 OVN 逻辑网络中的功能：
 
-   <img src="D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\ovs-flow-table.png" style="zoom:67%;" />
+   <img src="https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovs-flow-table.png" style="zoom:67%;" />
 
    
 
@@ -454,31 +454,31 @@
 
       1）发送过程：compute0 节点
 
-      <img src="D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\ovs-openflow-rule-1.png" style="zoom:67%;" />
+      <img src="https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovs-openflow-rule-1.png" style="zoom:67%;" />
 
-      ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\ovs-openflow-rule-2.png)
+      ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovs-openflow-rule-2.png)
 
       a. 从实例发出的数据包进入 OVS br-int 网桥的端口 4 后，经过 table0 处理，进行物理网络至逻辑网络转换，该数据包通过 metadata 为 **`0x4`** 的 Datapath（逻辑交换机）上的 **`0x4`** 逻辑入端口进入 OVN 逻辑网络。
 
-      ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\ovs-openflow-rule-3.png)
+      ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovs-openflow-rule-3.png)
       
-      ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\ovs-openflow-rule-4.png)
+      ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovs-openflow-rule-4.png)
       
       b. 更改数据包在 Datapath（逻辑交换机）上的逻辑出端口 **`reg15`**。
       
-      ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\ovs-openflow-rule-5.png)
+      ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovs-openflow-rule-5.png)
       
       c. 数据包通过 metadata 为 **`0x4`** 的 Datapath（逻辑交换机）的逻辑出端口 **`0x3`**，并进行 Geneve隧道封装，最终通过 OVN 隧道端口从该计算节点发出。
       
       2）接收过程：compute1 节点
       
-      <img src="D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\ovs-openflow-rule-6.png" style="zoom:67%;" />
+      <img src="https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovs-openflow-rule-6.png" style="zoom:67%;" />
       
-      ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\ovs-openflow-rule-7.png)
+      ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovs-openflow-rule-7.png)
       
       a. 从 OVN 隧道端口接收其他计算节点发来的数据包，进行 Geneve 隧道解封装，并添加 Datapath（逻辑交换机）的 metadata。
       
-      ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\ovs-openflow-rule-8.png)
+      ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovs-openflow-rule-8.png)
       
       b. 数据包最终由 OVS br-int 网桥的端口 8 转发至目标实例。
       
@@ -486,31 +486,31 @@
       
 3. 项目（租户）中同一子网内实例间跨节点通信：tcpdump、Wireshark 抓包分析
 
-      ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\host-geneve-tunnel-1.png)
+      ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/host-geneve-tunnel-1.png)
 
-      ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\host-geneve-tunnel-2.png)
+      ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/host-geneve-tunnel-2.png)
 
       
 
 4. 外部网络访问实例（**`DNAT`**）：
 
-      ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\ovn-dnat-1.png)
+      ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovn-dnat-1.png)
 
       外部网络数据包通过 OVS br-int 集成网桥 **`patch-to-br-int`** 端口进入 metadata 为 **`0x2`** 的 Datapath（逻辑交换机）上的 **`0x1`** 逻辑入端口。
 
-      ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\ovn-dnat-2.png)
+      ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovn-dnat-2.png)
 
-      ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\ovn-dnat-3.png)
+      ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovn-dnat-3.png)
 
-      ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\ovn-dnat-4.png) 
+      ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovn-dnat-4.png) 
 
       数据包通过 OVS br-int 网桥的端口 4 转发至目标实例。
 
 5. 外部网络访问实例：tcpdump、Wireshark 抓包分析
 
-   ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\tcpdump-fip-tenant-1.png)
+   ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/tcpdump-fip-tenant-1.png)
 
-   ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\Open Virtual Network（OVN）概述与分析\tcpdump-fip-tenant-2.png)
+   ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/tcpdump-fip-tenant-2.png)
 
 #### 常用 OVS OpenFlow 相关命令：   
 
