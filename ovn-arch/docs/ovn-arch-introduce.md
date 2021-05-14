@@ -485,13 +485,11 @@
       1）发送过程：compute0 节点
 
       <img src="https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovs-openflow-rule-1.png" style="zoom:67%;" />
-
       ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovs-openflow-rule-2.png)
 
       a. 从实例发出的数据包进入 OVS br-int 网桥的端口 4 后，经过 table0 处理，进行物理网络至逻辑网络转换，该数据包通过 metadata 为 **`0x4`** 的 Datapath（逻辑交换机）上的 **`0x4`** 逻辑入端口进入 OVN 逻辑网络。
 
-      ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovs-openflow-rule-3.png)
-      
+      ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovs-openflow-rule-3.png)      
       ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovs-openflow-rule-4.png)
       
       b. 更改数据包在 Datapath（逻辑交换机）上的逻辑出端口 **`reg15`**。
@@ -502,8 +500,7 @@
       
       2）接收过程：compute1 节点
       
-      <img src="https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovs-openflow-rule-6.png" style="zoom:67%;" />
-      
+      <img src="https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovs-openflow-rule-6.png" style="zoom:67%;" />      
       ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovs-openflow-rule-7.png)
       
       a. 从 OVN 隧道端口接收其他计算节点发来的数据包，进行 Geneve 隧道解封装，并添加 Datapath（逻辑交换机）的 metadata。
@@ -517,7 +514,6 @@
 3. 项目（租户）中同一子网内实例间跨节点通信：tcpdump、Wireshark 抓包分析
 
       ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/host-geneve-tunnel-1.png)
-
       ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/host-geneve-tunnel-2.png)
 
       
@@ -529,9 +525,7 @@
       外部网络数据包通过 OVS br-int 集成网桥 **`patch-to-br-int`** 端口进入 metadata 为 **`0x2`** 的 Datapath（逻辑交换机）上的 **`0x1`** 逻辑入端口。
 
       ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovn-dnat-2.png)
-
       ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovn-dnat-3.png)
-
       ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovn-dnat-4.png) 
 
       数据包通过 OVS br-int 网桥的端口 4 转发至目标实例。
@@ -539,7 +533,6 @@
 5. 外部网络访问实例：tcpdump、Wireshark 抓包分析
 
    ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/tcpdump-fip-tenant-1.png)
-
    ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/tcpdump-fip-tenant-2.png)
 
 
