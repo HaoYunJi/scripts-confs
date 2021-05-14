@@ -27,6 +27,7 @@
    
    > **注意**：以下的逻辑网络即为 OVN 逻辑网络。
 
+
 #### Open Virtual Network（OVN）简介：
 
 1. `OVN` 是 Open vSwitch 社区在 2015 年 1 月份才宣布的一个子项目。
@@ -71,11 +72,13 @@
 
 6. OVN 可以和很多 CMS（Cloud Management System）集成到一起，如 Openstack Neutron。
 
+
 #### OVN 特性：
 
 1. 提供虚拟网络抽象（L2、L3、overlays 和物理网络的连通）、ARP 代答
 2. 完全分布式 DHCP、分布式 L3、NAT 和 LB、灵活的 ACL
 3. L2 软网关、L3 网关从逻辑网络到物理网络支持 TOR
+
 
 #### OVN 中的节点角色：
 
@@ -136,6 +139,7 @@
 
 7. **`ovs-vswitchd`** 和 **`ovsdb-server`** 是 OVS 的两个守护进程。
 
+
 #### OVN 逻辑网络（logical network）：
 
 1. OVN 逻辑网络实现与物理网络相同的概念，但它们通过隧道或其他封装与物理网络隔离。
@@ -194,6 +198,7 @@
    >
    > e. **`router`**：逻辑交换机与逻辑路由器连接的端口。
 
+
 #### OVN Northbound DB（OVN 北向数据库）：
 
 1. Northbound DB 是 OVN 和 CMS 之间的接口，Northbound DB 保存 CMS 产生的数据。
@@ -231,6 +236,7 @@
    > **注意**：每行代表一个应用到逻辑交换机上的 ACL 规则，若逻辑交换机上面的所有端口都没有配置安全组，那么该逻辑交换机上不应用 ACL。
 
    4）其他相关的表：Logical_Router、Logical_Router_Port、NAT。
+
 
 #### OVN Southbound DB（OVN 南向数据库）：
 
@@ -294,6 +300,7 @@
    
       e. **逻辑网络与物理网络绑定关系的数据：表 Datapath_Binding、表 Port_Binding。**
 
+
 #### OVN Chassis：
 
 1. 当 ovn-controller 启动时，将读取本地 OVS 数据库 **`Open_vSwitch`** 表中的值：
@@ -321,6 +328,7 @@
 4. 若 HV 有多个接口可以建立隧道，可以在 ovn-controller 启动之前，把每对值填在 Open_vSwitch 表中。
 
    ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovs-openvswitch-table.png)
+
 
 #### OVN tunnel（OVN 隧道）：
 
@@ -389,6 +397,7 @@
    > b. OVN 中的 tunnel ID 由 OVN 分配。
    > c. 使用 Neutron 创建网络时指定 tunnel 类型和 tunnel ID（VNID）是无用的，OVN不做处理！
 
+
 #### Neutron 与 OVN 对比：   
 
 1. Neutron 二层报文处理通过 OVS OpenFlow 流表实现，三层报文处理通过 Linux TCP/IP 协议栈实现。
@@ -441,6 +450,7 @@
 
 9. OVS 的 conntrack 由 Linux kernel netfilter 模块来实现，调用 **`netfiler userspace netlink API`** 将报文发送给 Linux kernel 的 **`netfiler connection tracker`** 模块进行处理。
 10. 该模块给每个连接维护一个连接状态表（CT table），记录这个连接的状态，OVS 获取连接状态，OpenFlow 流可以匹配这些连接状态。
+
 
 #### OVN 逻辑网络数据包在集成网桥中的流量追踪：
 
