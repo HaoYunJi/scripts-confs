@@ -283,9 +283,13 @@
       a. 每行包含的内容：
 
    > a. 端口所属的 chassis
+   > 
    > b. 端口所属的 Datapath_Binding
+   > 
    > c. logical port 的 MAC 和 IP 地址
+   > 
    > d. **tunnel_key 作为 logical input/output port identifier（逻辑输入/输出端口标识符）**
+   > 
    > e. 端口类型：localport、patch、localnet、chassisredirect。
 
       b. 端口所处的 chassis 由 ovn-controller 或 ovn-controller-vtep 设置，其余的值由 ovn-northd 设置。   
@@ -377,8 +381,11 @@
    > **重要**：
    >
    > a. 对于每个进入 OVS br-int 集成网桥的数据包都具有以上三个属性。
+   > 
    > b. OVS 的隧道封装由 OpenFlow 流表实现，因此 ovn-controller 需将这三个标识符写到本地 HV 的 OpenFlow 流表中。
+   > 
    > c. logical datapath identifier 与 logical input port identifier 在入口方向被赋值，分别存在 **`OpenFlow metadata`** 字段和 Nicira 扩展寄存器 **`reg14`**（Nicira extensive register 14）中。
+   > 
    > d. 数据包经过 OVS 的 pipeline 处理后，若需要从指定端口发出，只需要将 logical output port identifier 写在 Nicira 扩展寄存器 **`reg15`**（Nicira extensive register 15）中。
 
 8. Geneve 隧道字段说明：
