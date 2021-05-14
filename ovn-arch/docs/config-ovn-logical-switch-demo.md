@@ -27,7 +27,7 @@
 
 1. 此次创建的 OVN 逻辑网络拓扑：
 
-![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-logical-switch-1.jpg)
+![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/config-ovn-logical-switch-demo/ovn-logical-switch-1.jpg)
 
 2. 通过 ip、ovs-vsctl、ovn-nbctl、ovn-sbctl 命令创建 OVS 与 OVN 相关的逻辑组件，其具体的数据转发规则由各个 ovn-host 节点的 OVS 流规则实现。
 
@@ -254,7 +254,7 @@ cookie=0x0, duration=56135.741s, table=65, n_packets=20, n_bytes=1512, idle_age=
 
 Geneve 隧道封装数据包抓包的原始数据，需使用 Analyze -> Decode As 进行协议转换，由于无 Geneve 协议，因此使用 VXLAN 协议代替。
 
-![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-ls-geneve.jpg)
+![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/config-ovn-logical-switch-demo/ovn-ls-geneve.jpg)
 
 #### 环境清理：
 
