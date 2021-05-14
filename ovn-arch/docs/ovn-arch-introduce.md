@@ -410,7 +410,9 @@
    5）value：1-bit 0、15-bit logical input port identifier、16-bit logical output port identifier
 
    > a. OVN 中的 tunnel 类型由 HV 上的 ovn-controller 来设置，并不由 CMS 指定。
+   > 
    > b. OVN 中的 tunnel ID 由 OVN 分配。
+   > 
    > c. 使用 Neutron 创建网络时指定 tunnel 类型和 tunnel ID（VNID）是无用的，OVN不做处理！
 
 
