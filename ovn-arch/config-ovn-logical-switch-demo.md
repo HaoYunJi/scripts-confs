@@ -122,7 +122,7 @@
            options: {csum="true"}
        Port_Binding "ls1-vm1"
        # OVS bridge vm1 端口与 OVN 逻辑交换机 ls1-vm1 端口映射绑定
-       # 可查看 OVS Interface 数据库中相应端口的 external_ids 选项以确定
+       # 可查看 OVS Interface 数据库中相应端口的 external_ids:iface-id 选项以确定
    Chassis "46949570-4264-4038-91f6-27294a4ca9d3"
        hostname: "ovn-node2.domain12.example.com"
        Encap geneve
