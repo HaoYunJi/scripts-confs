@@ -282,11 +282,11 @@
 
       a. 每行包含的内容：
 
-   > 1. 端口所属的 chassis
-   > 2. 端口所属的 Datapath_Binding
-   > 3. logical port 的 MAC 和 IP 地址
-   > 4. **tunnel_key 作为 logical input/output port identifier（逻辑输入/输出端口标识符）**
-   > 5. 端口类型：localport、patch、localnet、chassisredirect。
+   > a. 端口所属的 chassis
+   > b. 端口所属的 Datapath_Binding
+   > c. logical port 的 MAC 和 IP 地址
+   > d. **tunnel_key 作为 logical input/output port identifier（逻辑输入/输出端口标识符）**
+   > e. 端口类型：localport、patch、localnet、chassisredirect。
 
       b. 端口所处的 chassis 由 ovn-controller 或 ovn-controller-vtep 设置，其余的值由 ovn-northd 设置。   
 
