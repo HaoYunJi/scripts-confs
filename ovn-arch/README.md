@@ -10,6 +10,6 @@ OVS, OVN and so on.
 
 Include several docs about OVN arch, logical switch, logical router, gateway, ACL and container connection:
 
-> **OVN arch**: https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/docs/ovn-arch-introduce.md
-> 
-> **OVN logical switch**: https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/docs/config-ovn-logical-switch-demo.md
+**·** **OVN arch**: https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/docs/ovn-arch-introduce.md
+
+**·** **OVN logical switch**: https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/docs/config-ovn-logical-switch-demo.md
