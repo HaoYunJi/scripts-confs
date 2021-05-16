@@ -275,3 +275,8 @@ $ sudo ovs-vsctl --if-exists --with-iface del-port br-int vm2
 # 删除 namespace 与 OVS bridge 及 namespace 关联的端口
 ```
 
+#### 参考链接：
+
+- OVN 简单部署：https://www.cnblogs.com/silvermagic/p/7666134.html
+- 介绍和安装 OVN：https://www.sdnlab.com/19157.html
+
