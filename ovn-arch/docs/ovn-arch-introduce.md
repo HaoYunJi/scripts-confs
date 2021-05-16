@@ -548,3 +548,22 @@ $ sudo ovs-ofctl dump-flows br-int
 # 查看 OpenFlow 流表与 OVN 逻辑网络映射关系
 ```
 
+
+
+#### 参考链接：
+
+- 云计算底层技术 - 使用 openvswitch：
+
+  https://opengers.github.io/openstack/openstack-base-use-openvswitch/
+
+- 云计算底层技术 - openflow 在 OVS 中的应用：
+
+  https://opengers.github.io/openstack/openstack-base-openflow-in-openvswitch/
+
+- OVS 调试介绍：
+
+  https://www.cnblogs.com/silvermagic/p/7666051.html
+
+- ONV 架构：
+
+  https://www.cnblogs.com/allcloud/p/8058906.html
