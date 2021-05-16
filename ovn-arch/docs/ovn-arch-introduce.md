@@ -518,7 +518,7 @@
 4. 外部网络访问实例（**`DNAT`**）：
 
       ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovn-dnat-1.png)
-      外部网络数据包通过 OVS br-int 集成网桥 **`patch-to-br-int`** 端口进入 metadata 为 **`0x2`** 的 Datapath（逻辑交换机）上的 **`0x1`** 逻辑入端口。
+      外部网络数据包通过 OVS br-int 集成网桥 **`patch-to-br-int`** 端口进入 metadata 为 **`0x2`** 的 Datapath（逻辑交换机）的 **`0x1`** 逻辑入端口。
       ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovn-dnat-2.png)
       ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovn-dnat-3.png)
       ![](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-arch-introduce/ovn-dnat-4.png) 
