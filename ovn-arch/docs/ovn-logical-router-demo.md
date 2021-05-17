@@ -25,7 +25,7 @@
    > 1. 其中 vm1~4 namespace 的 IP 地址通过 OVN 原生的 `DHCP` 功能获得。
    > 2. OVN 成对逻辑端口间的 **`MAC`** 地址需相同。
 
-   <img src="D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\配置OVN逻辑路由器\OVN-router-fig-1.png" style="zoom:67%;" />
+   <img src="https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/images/ovn-logical-router-demo/OVN-router-fig-1.png" style="zoom:67%;" />
 
 #### 理解 OVN 逻辑路由器：
 
