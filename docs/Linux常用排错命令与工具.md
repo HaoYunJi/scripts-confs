@@ -723,6 +723,7 @@ $ yum verify-rpm vsftpd
 #### 基础网络调试相关命令示例：
 
 1. ping 与 ping6 命令常用选项：
+
    <img src="https://github.com/Alberthua-Perl/summary-scripts/blob/master/docs/images/ping-ping6-options.JPG" style="zoom:80%;" />
 
    > 💥注意💥：有时网络连通性问题由 MTU（最大传输单元）所致，需测试 MTU 大小并进行调整。
@@ -1066,6 +1067,7 @@ $ yum verify-rpm vsftpd
 
    3）库函数有可能包含有一个或多个系统调用，也可能没有系统调用，如有些操作不需要涉及内核的功能。
    4）无论是应用程序或库函数都有可能不调用系统调用而直接运行。
+   
    <img src="https://github.com/Alberthua-Perl/summary-scripts/blob/master/docs/images/system-library-call.jpg" style="zoom:80%;" />
    
 3. 系统调用的意义：
