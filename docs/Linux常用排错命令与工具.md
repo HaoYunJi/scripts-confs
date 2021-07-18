@@ -350,7 +350,7 @@ $ grub2-mkconfig -o /boot/grub2/grub.cfg
 #### Kernel module 与虚拟化相关命令示例：
 
 ```bash
-![lsmod-cmd](https://github.com/Alberthua-Perl/summary-scripts/blob/master/docs/images/lsmod-cmd.jpg)# ----- Kernel module command -----
+# ----- Kernel module command -----
 $ lsmod
 # 查看当前已加载的内核模块列表
 $ modprobe -v <module_name>
