@@ -8,11 +8,11 @@
 #   perl BiotecanIndexDebug.pl
 
 ##################################################################
-# Please pay attention to following information:		         #
+# Please pay attention to following information:		 #
 # [ ERROR ]  : An important error, you must deal with at once.   #
-# [ CAUTION ]: You should know that to deal with error.		     #
-# [ INFO ]   : An universal information.			             #
-# [ PASS ]   : A good result you want.				             #
+# [ CAUTION ]: You should know that to deal with error.		 #
+# [ INFO ]   : An universal information.			 #
+# [ PASS ]   : A good result you want.				 #
 ##################################################################
 
 use warnings;
@@ -131,3 +131,4 @@ foreach my $index (@SepIndex) {
 
 print "[ PASS ] If you havn't seen any [ ERROR ], that's all right. Pass!\n";
 print "\n========== All analysis completely! ==========\n";
+
