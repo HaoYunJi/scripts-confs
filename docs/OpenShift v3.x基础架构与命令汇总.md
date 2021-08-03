@@ -215,6 +215,7 @@
     2）service 为 pod 提供统一的入口 IP 地址，该入口地址默认为 service 的虚拟 IP 地址（`ClusterIP`）。
 
     3）service 资源对象由 `kube-proxy` 组件实现，其虚拟 IP 地址存在于每个节点的 iptables NAT 表中，使用 `iptables -t nat -nvL` 命令即可查看指定的 ClusterIP。
+    
     <img src="https://github.com/Alberthua-Perl/scripts-confs/blob/master/docs/images/kube-proxy-service-code.jpg" style="zoom: 67%;" />
 
     4）service 有反向代理与负载均衡的功能，默认以 Round Robin 轮询的方式将流量转发至 pod。
@@ -222,6 +223,7 @@
     > 💥注意：
     >
     > 无论 OCP 集群使用 `ovs-subnet` 或 `ovs-multitenent` SDN 插件，同一项目的 pod 始终在同一个 flat 网络中，pod 间可直接通信，无需使用 service！
+    > 
     > <img src="https://github.com/Alberthua-Perl/scripts-confs/blob/master/docs/images/ocp3-network-plugin.jpg" style="zoom:80%;" />    
 
     6）若使用 ovs-multitenant SDN 插件，只是使用 `VNID` 实现不同项目间的 pod 二层隔离。
