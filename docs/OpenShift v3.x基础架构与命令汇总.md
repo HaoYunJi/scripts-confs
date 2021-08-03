@@ -235,6 +235,7 @@
     ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/docs/images/ocp3-ovs-2.png)
 
     8）同一节点上 pod 间的通信示意： 
+    
     <img src="https://github.com/Alberthua-Perl/scripts-confs/blob/master/docs/images/ocp3-ovs-3.png" style="zoom: 80%;" />
 
     9）OCP 3.x OVS 流表分析示意：
@@ -650,6 +651,7 @@
    ```
 
    👉 使用 S2I 源代码注入创建应用 pod 流程：
+   
    <img src="https://github.com/Alberthua-Perl/scripts-confs/blob/master/docs/images/s2i-application-build.jpg" style="zoom:67%;" />
 
    > ✅注意：
@@ -1011,16 +1013,24 @@
 
 #### 参考链接：
 
+- OpenShift 项目：
+
+  https://github.com/openshift/
+  
+- OKD 3.11 官方文档：
+
+  https://docs.okd.io/3.11/welcome/index.html 
+
 - 基于 S2I 的 Golang 应用构建与部署示例：
 
-- https://github.com/Alberthua-Perl/dockerfile-s2i-demo/tree/master/golang-s2i
+  https://github.com/Alberthua-Perl/dockerfile-s2i-demo/tree/master/golang-s2i
 
 - SkyDNS 项目：
 
-- https://github.com/skynetservices/skydns
+  https://github.com/skynetservices/skydns
 
 - Bugfix: route HostAlreadyClaimed
 
-- https://bugzilla.redhat.com/show_bug.cgi?id=1660598
+  https://bugzilla.redhat.com/show_bug.cgi?id=1660598
 
   
