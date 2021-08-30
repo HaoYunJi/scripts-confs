@@ -1,13 +1,13 @@
 [mirror-centos8-AppStream]
 name=Mirror repositories for CentOS 8 - AppStream
 baseurl=http://mirror.centos.org/centos/8/AppStream/x86_64/os/
-enabled=0
+enabled=1
 gpgcheck=0
 
 [mirror-centos8-BaseOS]
 name=Mirror repositories for CentOS 8 - BaseOS
 baseurl=http://mirror.centos.org/centos/8/BaseOS/x86_64/os/
-enabled=0
+enabled=1
 gpgcheck=0
 
 [mirror-centos8-HighAvailability]
@@ -31,7 +31,7 @@ gpgcheck=0
 [mirror-centos8-cr]
 name=Mirror repositories for CentOS 8 - cr
 baseurl=http://mirror.centos.org/centos/8/cr/x86_64/os/
-enabled=0
+enabled=1
 gpgcheck=0
 
 [mirror-centos8-extras]
@@ -43,5 +43,5 @@ gpgcheck=0
 [mirror-centos8-fasttrack]
 name=Mirror repositories for CentOS 8 - fasttrack
 baseurl=http://mirror.centos.org/centos/8/fasttrack/x86_64/os/
-enabled=0
+enabled=1
 gpgcheck=0
