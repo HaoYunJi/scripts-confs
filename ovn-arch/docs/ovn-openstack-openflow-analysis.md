@@ -466,11 +466,11 @@ student@workstation:
   
   - 此类型的 OVN 逻辑路由器逻辑出端口位于实例所在的计算节点（lrp 类型端口），该端口在 OVN 网关路由器节点上对应的端口为 `cr-lrp` 类型端口（分布式网关端口，`distributed gateway port`），自计算节点出 lrp 端口的流量将通过跨节点间的 `Geneve` 隧道重定向于 OVN 网关路由器节点的 cr-lrp 类型端口。
   
-    ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\man-5-ovn-nb-distributed-gateway-ports.jpg)
+    ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/man-5-ovn-nb-distributed-gateway-ports.jpg)
   
-    ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\ovn-logical-switch-demo.jpg)
+    ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/ovn-logical-switch-demo.jpg)
   
-    ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\ovn-logical-router-and-gateway-chassis.jpg)
+    ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/ovn-logical-router-and-gateway-chassis.jpg)
   
   - 若实例分配浮动 IP（fip），从实例内部到外部网络的互访流量均在实例所在的计算节点上实现（`dnat_and_snat`），OVN 逻辑路由器作为网关存在于每个计算节点的 OVS br-int 网桥中，流量不再经过 Gateway_Chassis。
   
@@ -487,11 +487,11 @@ student@workstation:
 
 - 🤘 RHOSP 13.0 & 16.1 多租户间 OVN 逻辑网络互连示例：
 
-  ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\ovn-multi-tenant-network-connect.jpg)
+  ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/ovn-multi-tenant-network-connect.jpg)
 
 - 🤘 RHOSP 13.0 & 16.1 OVN 租户网络与供应商网络模式及流量类型示例：
 
-  ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\ovn-tenant-and-provider-network-demo.png)
+  ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/ovn-tenant-and-provider-network-demo.png)
 
 
 
@@ -504,7 +504,7 @@ student@workstation:
   - 从外部直接访问计算节点以访问运行于计算节点之上的具有浮动 IP（fip）的实例（图例中红色虚线表示）
 - OVS 流表在 OVN 逻辑网络中的部分功能：
 
-<img src="D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\ovs-flow-table.png" style="zoom:80%;" />
+<img src="https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/ovs-flow-table.png" style="zoom:80%;" />
 
 
 
@@ -514,39 +514,39 @@ student@workstation:
   
   - 发送过程：compute0 节点
   
-    <img src="D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\ovs-openflow-rule-1.png" style="zoom:80%;" />
+    <img src="https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/ovs-openflow-rule-1.png" style="zoom:80%;" />
   
-    ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\ovs-openflow-rule-2.png)
+    ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/ovs-openflow-rule-2.png)
   
     - 从实例发出的数据包进入 OVS br-int 网桥的端口 4 后，经过 table0 处理，进行物理网络至逻辑网络转换，该数据包通过 metadata 为 **`0x4`** 的 Datapath（逻辑交换机）上的 **`0x4`** 逻辑入端口进入 OVN 逻辑网络。
   
-      ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\ovs-openflow-rule-3.png)
+      ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/ovs-openflow-rule-3.png)
   
-      ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\ovs-openflow-rule-4.png)
+      ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/ovs-openflow-rule-4.png)
   
     - 更改数据包在 Datapath（逻辑交换机）上的逻辑出端口 **`reg15`**。
   
-      ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\ovs-openflow-rule-5.png)
+      ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/ovs-openflow-rule-5.png)
   
     - 数据包通过 metadata 为 **`0x4`** 的 Datapath（逻辑交换机）的逻辑出端口 **`0x3`**，并进行 Geneve 隧道封装，最终通过 OVN 隧道端口从该计算节点发出。
   
   - 接收过程：compute1 节点  
   
-    <img src="D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\ovs-openflow-rule-6.png" style="zoom:67%;" />
+    <img src="https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/ovs-openflow-rule-6.png" style="zoom:67%;" />
   
-    ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\ovs-openflow-rule-7.png)
+    ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/ovs-openflow-rule-7.png)
   
     - 从 OVN 隧道端口接收其他计算节点发来的数据包，进行 Geneve 隧道解封装，并添加 Datapath（逻辑交换机）的 metadata。
   
-      ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\ovs-openflow-rule-8.png)
+      ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/ovs-openflow-rule-8.png)
   
     - 数据包最终由 OVS br-int 网桥的端口 8 转发至目标实例。
   
   - 两节点间的 tcpdump 与 Wireshark 抓包分析：
   
-    ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\host-geneve-tunnel-1.png)
+    ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/host-geneve-tunnel-1.png)
   
-    ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\host-geneve-tunnel-2.png)
+    ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/host-geneve-tunnel-2.png)
 
 
 
@@ -940,7 +940,7 @@ student@workstation:
 
     为了验证以上结果，分别在 compute1 节点的 eth2 网口（对接 172.25.250.0/24 外部网络）与 vlan20 接口（Geneve 隧道网络）上抓包，结果显示无数据包通过 eth2 网口，而 vlan20 接口上监听到 Geneve 隧道流量。
 
-    ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\compute1-vlan20-tcpdump-geneve-redirect-gateway-chassis.jpg)
+    ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/compute1-vlan20-tcpdump-geneve-redirect-gateway-chassis.jpg)
 
     
 
@@ -985,9 +985,9 @@ student@workstation:
 
     为了验证以上结果，分别在 controller0 节点的 eth2 网口（对接 172.25.250.0/24 外部网络）与 vlan20 接口（Geneve 隧道网络）上抓包，结果显示 vlan20 接口监听到了 Geneve 隧道流量，eth2 网口监听到与外网互访的流量。
     
-    ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\controller0-vlan20-tcpdump-geneve-redirect-gateway-chassis.jpg) 
+    ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/controller0-vlan20-tcpdump-geneve-redirect-gateway-chassis.jpg) 
     
-    ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\controller0-eth2-tcpdump-external.jpg)
+    ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/controller0-eth2-tcpdump-external.jpg)
 
 
 
@@ -995,23 +995,23 @@ student@workstation:
 
   - `DNAT` 功能的实现：
 
-    ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\ovn-dnat-1.png)
+    ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/ovn-dnat-1.png)
 
     外部网络数据包通过 OVS br-int 集成网桥 **`patch-to-br-int`** 端口进入 metadata 为 **`0x2`** 的 Datapath（逻辑交换机）上的 **`0x1`** 逻辑入端口。
 
-    ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\ovn-dnat-2.png)
+    ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/ovn-dnat-2.png)
 
-    ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\ovn-dnat-3.png)
+    ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/ovn-dnat-3.png)
 
-    ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\ovn-dnat-4.png)
+    ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/ovn-dnat-4.png)
 
     数据包通过 OVS br-int 网桥的端口 4 转发至目标实例。
 
   - 直接对实例所在的计算节点进行 tcpdump 与 Wireshark 抓包分析：
 
-    ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\tcpdump-fip-tenant-1.png)
+    ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/tcpdump-fip-tenant-1.png)
 
-    ![](D:\Linux操作系统与编程语言汇总\Typora文档汇总\SDN\pictures\OVN在OpenStack中的集成与流表分析\tcpdump-fip-tenant-2.png)
+    ![](https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/images/ovn-openstack-openflow-analysis/tcpdump-fip-tenant-2.png)
 
 
 
