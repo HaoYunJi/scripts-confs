@@ -14,3 +14,5 @@ Several docs about OVN arch, logical switch, logical router, gateway, load balan
 👉 **OVN logical switch**: https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/docs/ovn-logical-switch-demo.md
 
 👉 **OVN logical router**: https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/docs/ovn-logical-router-demo.md
+
+👉 **OVN OpenStack OpenFlow Analysis**: https://github.com/Alberthua-Perl/scripts-confs/blob/master/ovn-arch/docs/ovn-openstack-openflow-analysis.md
