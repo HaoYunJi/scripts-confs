@@ -9,7 +9,7 @@ Use **`ip link`**, **`ovs-vsctl`**, **`ovn-nbctl`**, **`ovn-sbctl`** to manage l
 
 Following docs about OVN arch, logical switch, logical router, gateway chassis, load balance, ACL and container connection:
 
-👉 [**OVN arch - Open Virtual Network（OVN）概述与分析**](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/docs/ovn-arch-introduce.md)
+👉 [**OVN architecture - Open Virtual Network（OVN）概述与分析**](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/docs/ovn-arch-introduce.md)
 
 👉 [**OVN logical switch - 配置 OVN 逻辑交换机**](https://github.com/Alberthua-Perl/summary-scripts/blob/master/ovn-arch/docs/ovn-logical-switch-demo.md)
 
