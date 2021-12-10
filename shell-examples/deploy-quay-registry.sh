@@ -103,7 +103,7 @@ function config_quay() {
 
 ### Note ###
 # After running docker config quay, you must login https://<register_url>:8443
-# as quayuser/redhat. During quay configuration, quay config will insert MySQL 
+# as quayconfig/redhat. During quay configuration, quay config will insert MySQL 
 # and test connection with MySQL database.
 # So you can't use quay configuration file directly in script which will result
 # quay container can't be deployed successfully!
