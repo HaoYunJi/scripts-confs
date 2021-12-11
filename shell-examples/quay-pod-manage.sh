@@ -94,7 +94,7 @@ config_quay() {
     --env MYSQL_PASSWORD=${MYSQL_PASSWORD} \
     --env MYSQL_DATABASE=${MYSQL_DATABASE} \
     --name ${MYSQL_CONTAINER_NAME} \
-		--pod ${QUAY_NAME} \
+    --pod ${QUAY_NAME} \
     -v /var/lib/mysql:/var/lib/mysql/data:Z \
     ${DESIRE_MYSQL_IMAGE}
 	[[ $? -eq 0 ]] && echo "    ---> Create ${MYSQL_CONTAINER_NAME} container successfully..."
@@ -111,7 +111,7 @@ config_quay() {
   podman run \
     --detach \
     --name quay-redis \
-		--pod ${QUAY_NAME} \
+    --pod ${QUAY_NAME} \
     -v /var/lib/redis:/var/lib/redis/data:Z \
     ${DESIRE_REDIS_IMAGE}
   [[ $? -eq 0 ]] && echo "    ---> Create quay-redis container successfully..."
@@ -129,8 +129,8 @@ config_quay() {
   podman run \
     --detach \
     --name quay-config \
-		--pod quay-aio \
-		${DESIRE_QUAY_IMAGE} \
+    --pod quay-aio \
+    ${DESIRE_QUAY_IMAGE} \
     config redhat
 	[[ $? -eq 0 ]] && echo "    ---> Create quay-config container successfully..."
 
@@ -186,10 +186,10 @@ deploy_quay() {
     echo "    ---> Copy Quay self-signed certification..."
     cp /root/{ssl.key,ssl.cert} /mnt/quay/config/
   	chmod 0644 /mnt/quay/config/ssl.key
-		# must change ssl.key permission, or quay nginx can't run as to permission denied
-		chown 1001 /mnt/quay/storage
-		# change owner 1001 for nginx gateway to write for rootfull container
-		# reference url: https://access.redhat.com/solutions/5503811
+    # must change ssl.key permission, or quay nginx can't run as to permission denied
+    chown 1001 /mnt/quay/storage
+    # change owner 1001 for nginx gateway to write for rootfull container
+    # reference url: https://access.redhat.com/solutions/5503811
 
     ### stop quay-config container ###
     echo "    ---> Stop quay-config container..."
@@ -201,7 +201,7 @@ deploy_quay() {
     podman run \
       --detach \
       --name quay-master \
-  		--pod ${QUAY_NAME} \
+      --pod ${QUAY_NAME} \
       -v /mnt/quay/config:/conf/stack:Z \
       -v /mnt/quay/storage:/datastorage:Z \
       ${DESIRE_QUAY_IMAGE}
@@ -257,7 +257,7 @@ recover_quay() {
 	sed -i s/10.88.[0-9]*.[0-9]*/${NETNS_IP}/g /mnt/quay/config/config.yaml
 	
 	podman run \
-		--detach \
+    --detach \
     --name quay-master \
     --pod ${QUAY_NAME} \
     -v /mnt/quay/config:/conf/stack:Z \
