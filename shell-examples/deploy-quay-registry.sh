@@ -1,33 +1,29 @@
 #!/bin/bash
-
-# Configure Red Hat Quay v3 internal registry.
-# Deploy method through docker-1.13.1 engine.
-#    
-# * issue: 
-#     If use podman engine, quay container always can't 
-#     be deployed successfully, and 443 port is always 
-#     connected refused!
 #
-# * use method:
-#     1. run `config_quay' function
-#     2. config quay through Web UI
-#     3. run `deploy_quay' function
+# Configure Red Hat Quay v3.3.0 internal registry.
+# Deploy method through docker-ce engine.
+# 
+# Usage:
+#   - run 'config_quay' function
+#   - config quay through Web UI
+#   - run 'deploy_quay' function
 #    
-# Created by hualf on 2020-08-03.
+# Modified by hualf on 2021-12-19.
+# 
 
-function config_quay() {
-  ### Install Docker ###
-  echo "[*] Check docker package..."
-  if `rpm -q docker > /dev/null`; then
-    echo "    ---> Docker has been installled..."
+config_quay() {
+  ### install docker-ce ###
+  echo "[*] Check docker-ce package..."
+  if $(rpm -q docker-ce > /dev/null); then
+    echo "    ---> docker-ce has been installled..."
   else
-    echo "    ---> Install docker package..."
-    yum install -y docker
+    echo "    ---> Install docker-ce package..."
+    yum install -y docker-ce
     systemctl enable docker.service
     systemctl start docker.service
   fi
   
-  ### Create MySQL database container ###
+  ### create mysql database container ###
   echo "[*] Create MySQL database container..."
   mkdir -p /var/lib/mysql
   chmod 777 /var/lib/mysql
@@ -37,7 +33,7 @@ function config_quay() {
   export MYSQL_USER=quayuser
   export MYSQL_ROOT_PASSWORD=redhat
   
-  if `docker images | grep mysql > /dev/null`; then
+  if $(docker images | grep mysql > /dev/null); then
     echo "    ---> mysql-57-rhel container image downloaded..."
   else
     echo "    ---> Loading mysql-57-rhel container image..."
@@ -57,12 +53,12 @@ function config_quay() {
     -v /var/lib/mysql:/var/lib/mysql/data:Z \
     registry.access.redhat.com/rhscl/mysql-57-rhel7
   
-  ### Create Redis database container ###
+  ### create redis database container ###
   echo "[*] Create Redis database container..."
   mkdir -p /var/lib/redis
   chmod 777 /var/lib/redis
   
-  if `docker images | grep redis > /dev/null`; then
+  if $(docker images | grep redis > /dev/null); then
     echo "    ---> redis-32-rhel7 container image downloaded..."
   else
     echo "    ---> Loading redis-32-rhel7 container image..."
@@ -78,13 +74,13 @@ function config_quay() {
     -v /var/lib/redis:/var/lib/redis/data:Z \
     registry.access.redhat.com/rhscl/redis-32-rhel7
   
-  ### Login Red Hat Quay v3 registry ###
+  ### login Red Hat Quay v3 registry ###
   # echo "[*] Login Red Hat Quay v3 registry..."
   # podman login -u="redhat+quay" -p="O81WSHRSJR14UAZBK54GQHJS0P1V4CLWAJV1X2C4SD7KO59CQ9N3RE12612XU1HR" quay.io
   
-  ### Load Red Hat Quay v3 container image ###
+  ### load Red Hat Quay v3 container image ###
   echo "[*] Load Red Hat Quay v3 container image..."
-  if `docker images | grep quay > /dev/null`; then
+  if $(docker images | grep quay > /dev/null); then
     echo "    ---> quay container image downloaded..."
   else
     echo "    ---> Loading quay container image..."
@@ -103,30 +99,35 @@ function config_quay() {
 
 ### Note ###
 # After running docker config quay, you must login https://<register_url>:8443
-# as quayconfig/redhat. During quay configuration, quay config will insert MySQL 
-# and test connection with MySQL database.
+# as quayconfig/redhat. During quay configuration, config will insert mysql 
+# and test connection with mysql database.
 # So you can't use quay configuration file directly in script which will result
 # quay container can't be deployed successfully!
 
-function deploy_quay() {
-  ### Copy Quay config file ###
+deploy_quay() {
+  ### copy Quay config file ###
   echo "[*] Copy Quay config file..."
   mkdir -p /mnt/quay/{config,storage}
+  tar -zxf /root/quay-config.tar.gz 
   cp /root/config.yaml /mnt/quay/config/
   
-  ### Create self-signed certification ###
+  ### create self-signed certification ###
   echo "[*] Create Quay self-signed certification..."
   openssl req \
     -newkey rsa:2048 -nodes -keyout /root/ssl.key \
     -x509 -days 3650 -out /root/ssl.cert \
-    -subj "/C=CN/ST=Shanghai/L=Shanghai/O=RedHat/OU=RedHat/CN=*.openshift4.example.com"
+    -subj "/C=CN/ST=Shanghai/L=Shanghai/O=RedHat/OU=RedHat/CN=QuayManager"
   
   sed -i 's/PREFERRED_URL_SCHEME: http/PREFERRED_URL_SCHEME: https/' /mnt/quay/config/config.yaml
   
   echo "    ---> Copy Quay self-signed certification..."
   cp /root/{ssl.key,ssl.cert} /mnt/quay/config/
-  cp /root/ssl.cert /etc/pki/ca-trust/source/anchors/ssl.cert
-  update-ca-trust extract
+  chmod 0644 /mnt/quay/config/ssl.key
+  chown 1001 /mnt/quay/storage/
+  # If don't change owner of the directory, you can't push any container images into registry as to
+  # permission dinied.
+  #cp /root/ssl.cert /etc/pki/ca-trust/source/anchors/ssl.cert
+  #update-ca-trust extract
   
   ### Stop quay-config container ###
   echo "[*] Stop quay-config container..."
@@ -153,5 +154,4 @@ function deploy_quay() {
 
 config_quay
 #deploy_quay
-### When use `config_quay', comment `deploy_quay' vice versa.
 
