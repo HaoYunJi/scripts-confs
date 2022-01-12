@@ -50,7 +50,7 @@ config_quay() {
     --name ${MYSQL_CONTAINER_NAME} \
     --privileged=true \
     --publish 3306:3306 \
-    -v /var/lib/mysql:/var/lib/mysql/data:Z \
+    -v /var/lib/mysql:/var/lib/mysql/data \
     registry.access.redhat.com/rhscl/mysql-57-rhel7
   
   ### create redis database container ###
@@ -71,7 +71,7 @@ config_quay() {
     --publish 6379:6379 \
     --privileged=true \
     --name quay-redis \
-    -v /var/lib/redis:/var/lib/redis/data:Z \
+    -v /var/lib/redis:/var/lib/redis/data \
     registry.access.redhat.com/rhscl/redis-32-rhel7
   
   ### login Red Hat Quay v3 registry ###
@@ -141,8 +141,8 @@ deploy_quay() {
     --sysctl net.core.somaxconn=4096 \
     --privileged=true \
     --name quay-master \
-    -v /mnt/quay/config:/conf/stack:Z \
-    -v /mnt/quay/storage:/datastorage:Z \
+    -v /mnt/quay/config:/conf/stack \
+    -v /mnt/quay/storage:/datastorage \
     -p 443:8443 \
     -p 80:8080 \
     quay.io/redhat/quay:v3.3.0
