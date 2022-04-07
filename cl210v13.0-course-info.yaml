@@ -1,0 +1,88 @@
+# cl210v13.0-course-info.yaml
+undercloud:
+  - director node
+  - all-in-one openstack cluster
+overcloud:
+  - controller, compute, computehci nodes
+
+class environment:
+  kiosk@foundation0:
+    - $ rht-vmctl start all
+      # wait all nodes until running
+      # controller0, compute{0,1}, computehci0, ceph0 can be powered by power node automatically.
+      # Note: Don't power on by manual generally.
+    - $ rht-vmctl status all
+      # wait 8~10 mins to verify all nodes status
+    - $ ssh stack@director
+      # ssh login director node by stack user account
+
+  stack@director:
+    - $HOME/stackrc: connect openstack cluster environment file
+    - commands:
+      ### Please run following commands after all nodes running!
+      - $ openstack baremetal node list
+        # verify all overcloud nodes status
+      - $ openstack compute service list
+    - $HOME/undercloud.conf:
+        - inspection_iprange: 172.25.249.150,172.25.249.180
+          # FIRST POWER ON:
+          #   director node allocate ip address from inspection_iprange to new node
+          #   to complete hardware inspection
+          bm-deploy-kernel image: boot first power on
+          bm-deploy-ramdisk image: boot first power on
+        - dhcp_start: 172.25.249.51
+          dhcp_end: 172.25.249.59
+          # SECOND POWER ON:
+          #   director node allocate ip address from dhcp_start to dhcp_end to
+          #   new mode to complete OS install and rhosp software deployment
+          overcloud-full-vmlinuz image: boot second power on
+          overcloud-full-initrd image: boot second power on
+          overcloud-full image: rhosp software and environment
+    - $ ipmitool -I lanplus -U admin -P password -H 172.25.249.101 power status
+      # verify node power status
+
+  root@power:
+    # power node apply power to start overcloud.
+    - $ ps aux | grep python
+    - $ ls -lh /usr/local/bin/virshbmc.py
+
+  root@utility:
+    # utility node apply idm domain and NICs for ovn provider network.
+    - $ kinit admin
+      Password for admin@LAB.EXAMPLE.NET: RedHat123^
+      # get credential for Kerberos admin
+    - $ ipa user-show <ipa_username>
+      # get ipa user account info, e.g developer0, architect1
+
+container service:
+  - rhosp 12: community P
+  - rhosp 13: community Q
+  - rhosp 16: community T
+  - NOTE: From rhosp 12 docker container has been as a method to run openstack service.
+  - director node: systemd manage openstack service
+    overcloud nodes: docker manage openstack service
+
+  root@controller0:
+    - $ docker ps --format="table {{.Names}}\t{{.Status}}"
+      # verify container openstack service
+    - $ docker images --format="table {{.Repository}}\t{{.Tag}}"
+      # verify docker images in local docker cache(/var/lib/docker)
+
+  # All rhosp container images come from RedHat Offical Image Registry.
+  # User can download all images to local tar ball and push them to internal
+  # image registry(docker-distribution).
+    
+    - current openstack service log location: /var/log/containers/<servicename>/
+    - current openstack service config location: /var/lib/config-data/puppet-generated/<servicename>/
+
+    - controller0 node: ceph monitor
+      computehci0 node: compute and ceph storage node
+      ceph0 node: ceph storage node
+
+  stack@director:
+    - $ sudo systemctl status docker-distribution.service
+      # verify registry service
+    - $ cat /etc/docker-distribution/registry/config.yml
+      # image cache: /var/lib/registry  
+
+
