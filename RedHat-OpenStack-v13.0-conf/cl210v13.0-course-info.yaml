@@ -184,6 +184,23 @@ RedHat Ceph Storage architecture:
       - ceph-iscsi-gateway: 
           - optional
           - description: ceph iscsi gateway
+  - CL210v13.0 course OpenStack cluster:
+      - controller0: ceph mon
+      - computehci0: ceph osd (3 osd disk)
+      - ceph0: ceph osd (3 osd disk)
+      - storage management network: control plane (mon-osd heartbeat, control command, etc)
+      - storage network: data plane (primary-osd-and-secondary-osd heartbeat, recovery, rebalance, clean, deep-clean, etc)
+      - commands:
+          ### root@controller0:
+          - $ ceph -s
+          - $ ceph osd pool ls [detail]         
+          - $ ceph osd tree
+            # Ceph 集群中各个节点的 OSD 磁盘信息
+          - $ rbd --pool <pool_name> ls images
+          - $ ceph auth list
+          - $ ceph auth get client.<name>
+            # 查看指定 Ceph 客户端的 keyring 与 caps 权限信息
+          - $ ceph auth print-key client.<name>
     
 OVN network architecture:
   ### root@controller0:
