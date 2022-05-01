@@ -22,7 +22,16 @@ class environment:
       ### Please run following commands after all nodes running!
       - $ openstack baremetal node list
         # verify all overcloud nodes status
+        # Note: 
+        #   1. 如果在返回结果中发现部分节点的电源状态为 power off 的话，那么先尝试以下命令：
+        #      $ openstack baremetal node power on <node_name>
+        #   2. 若以上命令没有响应，那么尝试在 virt-manager 控制面板上点亮节点。
       - $ openstack compute service list
+      - $ openstack server list
+        # verify overcloud node status
+        # Note:
+        #   如果部分节点出现 SHUTOFF 状态的话，那么尝试以下的命令：
+        #   $ openstack server set --state active <node_name>
     - $HOME/undercloud.conf:
         - inspection_iprange: 172.25.249.150,172.25.249.180
           # FIRST POWER ON:
@@ -267,7 +276,19 @@ OVN network architecture:
             # 这里的 DHCP 选址区段来自于连接的物理网络的地址区段
           - instance can access external network and external can also access instance
 
-demo1:
+host aggregate:
+  - logical aggregate: including different hosts with some same functions
+  - flavor: with specified properties point to logical aggregate
+  - instance: use flavor to build and scheduled to hosts of logical aggregate
+
+heat engine:
+  - heat template: include all resources and default variables
+  - environment file: customized variables to overwrite default variables in heat template
+  - use 'heat template' and 'environment file' to create heat stack
+  - heat stack is all resources defined in heat template
+  - resources include instance, network, flavor, image, security-group, floating-ip, etc.
+
+lab-demo:
   - description: how to deploy a instance for openstack cluster external access?
   - needed resources:
       - flavor
