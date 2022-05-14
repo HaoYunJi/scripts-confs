@@ -1,36 +1,39 @@
+---
 Ceph logical architecture:
-  1. RADOS: Reliable Autonomic Distributed Object Store
-  2. librados: app access ceph cluster directly through API(c++, python, ruby, java, php, etc)
-  3. librbd: rados block device(vm instance, linux os) -> block level
-  4. librgw: rados gateway(web authentication and authoritation) -> object store level
-  5. POSIX cephfs: filesystem level
+  - RADOS: Reliable Autonomic Distributed Object Store
+  - librados: app access ceph cluster directly through API(c++, python, ruby, java, php, etc)
+      - librbd: rados block device(vm instance, linux os) -> block level
+      - librgw: rados gateway(web authentication and authoritation) -> object store level
+  - POSIX cephfs: filesystem level
   
 Ceph physical node:
-  1. ceph monitor node: mon, manage cluster map, manage crush map, monitor mon heartbeat, monitor osd heartbeat
-     * Note: >=2n+1 mon nodes
-  2. ceph object store device node: osd, store data, monitor osd heartbeat
-     * Note: RHCS3 osd driver: filestore, RHCS4 osd driver: bluestore
-  3. ceph manager: mgr, collect cluster metrics, apply different plugins(dashboard, grafana, prometheus, zabbix)
-  4. ceph metadata server: mds, apply and manage cephfs metadata
-  5. ceph client: client, out cluster(manager cluster and deploy cluster), in cluster(components)
+  - ceph monitor node: mon, manage cluster map, manage crush map, monitor mon heartbeat, monitor osd heartbeat
+    # Note: >=2n+1 mon nodes
+  - ceph object store device node: osd, store data, monitor osd heartbeat
+    #  Note: RHCS3 osd driver: filestore, RHCS4 osd driver: bluestore
+  - ceph manager: mgr, collect cluster metrics, apply different plugins(dashboard, grafana, prometheus, zabbix)
+  - ceph metadata server: mds, apply and manage cephfs metadata
+  - ceph client: client, out cluster(manager cluster and deploy cluster), in cluster(components)
   
 Data into ceph cluster:
   pool: ceph cluster logigcal partition
   pg: placement group
-  ceph crush-rule-set -> pool
+  # ceph crush-rule-set -> pool
 
-  * ceph client data object -> ceph pool(pool-id) -> pg(pg-id) => CRUSH(crush-map, crush-rule-set) -> ceph osd(primary, secondary)
-    ----------------------------------------------------------    ----------------------------------------------------------------
-                      logical mapping                                                      physical mapping
+  ### How use CRUSH to store object date into ceph osd by Cpeh?
+  # ceph client data object -> ceph pool(pool-id) -> pg(pg-id) => CRUSH(crush-map, crush-rule-set) -> ceph osd(primary, secondary)
+  # ----------------------------------------------------------    ----------------------------------------------------------------
+  #                   logical mapping                                                      physical mapping
 
 Ceph installition:
-  1. method: ceph-deploy, ceph-ansible(Red Hat Ceph 3.x), Ceph-web-ui(Red Hat Ceph 4.x), ceph-container-image
-  2. associated files:
-     /etc/ansible/hosts
-     /usr/share/ceph-ansible/ansible.cfg
-     /usr/share/ceph-ansible/site.yml
-     /usr/share/ceph-ansible/group_vars/{all,osds,clients,mons,mgrs,mdss,rgws}.yml
-  3. $ ansible-playbook site.yml
+  - method: ceph-deploy, ceph-ansible(Red Hat Ceph 3.x), Ceph-web-ui(Red Hat Ceph 4.x), ceph-container-image
+  - associated files:
+      - /etc/ansible/hosts
+      - /usr/share/ceph-ansible/ansible.cfg
+      - /usr/share/ceph-ansible/site.yml
+      - /usr/share/ceph-ansible/group_vars/{all,osds,clients,mons,mgrs,mdss,rgws}.yml
+  - command:
+      - $ ansible-playbook site.yml
 
 Ceph commands:
   ceph -s
@@ -83,12 +86,7 @@ Ceph commands:
   ceph osd crush rule ls
   ceph osd crush dump <crush_rule_name>
 
-  
-
 Ceph iSCSI gateway:
   ceph iscsi initiator -> iscsi gateway(TCMU,LIO,librbd) -> ceph cluster rbd image
                           ------------------------------
                                   iscsi --> rbd
-
-
-
